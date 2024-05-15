@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:split_view/split_view.dart';
 
-
-
 const showSnackBar = false;
 const expandChildrenOnReady = true;
 
@@ -43,7 +41,9 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Color.fromRGBO(22, 27, 33, 1),
       floatingActionButton: ValueListenableBuilder<bool>(
         valueListenable: sampleTree.expansionNotifier,
         builder: (context, isExpanded, _) {
@@ -62,65 +62,72 @@ class MyHomePageState extends State<MyHomePage> {
         },
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top:16.0),
+        padding: const EdgeInsets.only(top: 16.0),
         child: SplitView(
-          controller: SplitViewController(limits: [WeightLimit(max: 0.2),WeightLimit(max: 0.8)]),
-          gripSize: 6,
+          // controller: SplitViewController(limits: [WeightLimit(max: 0.2),WeightLimit(max: 0.8)]),
+          gripSize: 1,
           viewMode: SplitViewMode.Horizontal,
           children: [
-            
-            
-            Column(children: [Text("Properties")],),
-        
-        
-        
+            Column(
+              children: [Text("Properties")],
+            ),
             TreeView.simple(
               tree: sampleTree,
               showRootNode: false,
-               
               expansionBehavior: ExpansionBehavior.none,
-              
               expansionIndicatorBuilder: (context, node) =>
-              NoExpansionIndicator(tree: node),
-                  
-              
-              indentation: const Indentation(style: IndentStyle.squareJoint),
-             
+                  NoExpansionIndicator(tree: node),
+              indentation: const Indentation(style: IndentStyle.roundJoint),
               onItemTap: (item) {
                 if (kDebugMode) print("Item tapped: ${item.key}");
                 print("children ${item.childrenAsList}");
               },
-        
               onTreeReady: (controller) {
                 _controller = controller;
-                if (expandChildrenOnReady) controller.expandAllChildren(sampleTree);
+                if (expandChildrenOnReady)
+                  controller.expandAllChildren(sampleTree);
               },
-            builder: (context, node) => Row(
-          children: [
-            Expanded(
-        child: Card(
-          child: ListTile(
-            title: Text("Item ${node.level}-${node.key} - ${node.data}"),
-            subtitle: Text('Level ${node.level}'),
-          ),
-        ),
-            ),
-            IconButton(
-        icon: Icon(Icons.add_circle_rounded), 
-        onPressed: () {
-          print("parent_key ${node.key}");
-          TreeNode newNode = TreeNode();
-          node..add(newNode);
-         print("newnode ${newNode.key}");
-        },
-            ),
-            IconButton(
-        icon: Icon(Icons.delete), // Add another icon for a different action
-        onPressed: () {node.parent!.remove(node);
-        },
-            ),
-          ],
-        ),
+              builder: (context, node) => SizedBox(
+                height: size.height*0.08,
+                child: Card(
+                  
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                          title: TextFormField(
+                            initialValue: "${node.data}",
+                            decoration: InputDecoration(
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                            ),
+                            onChanged: (value) {
+                              node.data = value;
+                            },
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.add_circle_rounded),
+                        onPressed: () {
+                          print("parent_key ${node.key}");
+                          TreeNode newNode = TreeNode();
+                          node..add(newNode);
+                          print("newnode ${newNode.key}");
+                          _controller?.expandAllChildren(sampleTree);
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons
+                            .delete), // Add another icon for a different action
+                        onPressed: () {
+                          node.parent!.remove(node);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),
