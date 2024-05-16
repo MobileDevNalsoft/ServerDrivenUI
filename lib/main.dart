@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mirai/mirai.dart';
 import 'package:provider/provider.dart';
-import 'package:server_driven_ui/Providers/UIProvider.dart';
-import 'package:server_driven_ui/UI/DynamicUI.dart';
-import 'package:server_driven_ui/UI/MiraiUI.dart';
+import 'package:server_driven_ui/Providers/ui_provider.dart';
+import 'package:server_driven_ui/UI/dynamic_ui.dart';
+import 'package:server_driven_ui/UI/mirai_ui.dart';
 
 import 'package:split_view/split_view.dart';
 
@@ -93,9 +93,8 @@ class MyHomePageState extends State<MyHomePage> {
                   controller.expandAllChildren(sampleTree);
               },
               builder: (context, node) => SizedBox(
-                height: size.height*0.08,
+                height: size.height * 0.08,
                 child: Card(
-                  
                   child: Row(
                     children: [
                       Expanded(
