@@ -1,0 +1,13 @@
+{
+    "widgets": {
+        "column": {
+            "MainAxisAlignment": ["start","end","center","spaceBetween","spaceAround","spaceEvenly"],
+            "MainAxisSize": ["start","end","center","stretch","baseline"],
+            "CrossAxisAlignment": [],
+            "TextDirection": [],
+            "VerticalDirection": [],
+            "TextBaseline": [],
+            "children": []
+        }
+    }
+}
