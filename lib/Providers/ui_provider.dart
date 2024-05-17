@@ -5,24 +5,34 @@ import 'package:flutter/services.dart';
 
 class UIProvider extends ChangeNotifier {
 
-  String? _selectedWidget;
+  Map? _selectedWidget;
   Map? _widgetProps;
-  String? get selectedWidget => _selectedWidget;
+  Map? _selectedWidgetData;
 
-  get widgetProps => _widgetProps;
+  Map? get selectedWidgetData => _selectedWidgetData;
+  Map? get selectedWidget => _selectedWidget;
+  Map? resultWidgets;
+
+
+
+  Map? get widgetProps => _widgetProps;
   set widgetProps(value){
     _widgetProps =value;
-    notifyListeners();
+    // notifyListeners();
   }
   set selectedWidget(value) {
     _selectedWidget = value;
     notifyListeners();
   }
 
+  set selectedWidgetData(value) {
+    _selectedWidgetData = value;
+    notifyListeners();
+  }
+
   Future loadJsonFromAssets(String path)async{
     var data = await rootBundle.loadString(path);
-      print(jsonDecode(data)["widgets"][selectedWidget!.toLowerCase()]);
-       return jsonDecode(data)["widgets"][selectedWidget!.toLowerCase()];
+       return jsonDecode(data)["widgets"];
   }
 
 }

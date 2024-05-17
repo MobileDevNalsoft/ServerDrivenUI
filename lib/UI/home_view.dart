@@ -1,13 +1,12 @@
-import 'dart:html';
-import 'dart:ui_web';
-
-import 'package:animated_tree_view/animated_tree_view.dart';
+import 'package:animated_tree_view/tree_view/tree_node.dart';
+import 'package:animated_tree_view/tree_view/tree_view.dart';
+import 'package:animated_tree_view/tree_view/widgets/expansion_indicator.dart';
+import 'package:animated_tree_view/tree_view/widgets/indent.dart';
+import 'package:customs/src.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:json_dynamic_widget/json_dynamic_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:server_driven_ui/Providers/UIProvider.dart';
-
+import 'package:server_driven_ui/Providers/ui_provider.dart';
 import 'package:split_view/split_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -22,10 +21,21 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> {
   final showSnackBar = false;
   final expandChildrenOnReady = true;
- 
   TreeViewController? _controller;
+
   @override
-  void initState() {}
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    Provider.of<UIProvider>(context, listen: false).widgetProps =
+        await Provider.of<UIProvider>(context, listen: false)
+            .loadJsonFromAssets('json/widgets.json');
+    print(
+        "widgets ${Provider.of<UIProvider>(context, listen: false).widgetProps}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +62,6 @@ class HomeViewState extends State<HomeView> {
       body: Padding(
         padding: const EdgeInsets.only(top: 16.0),
         child: SplitView(
-          // controller: SplitViewController(limits: [WeightLimit(max: 0.2),WeightLimit(max: 0.8)]),
           gripSize: 1,
           viewMode: SplitViewMode.Horizontal,
           children: [
@@ -60,53 +69,44 @@ class HomeViewState extends State<HomeView> {
               children: [
                 Text(
                   "Properties",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
-                if (Provider.of<UIProvider>(context, listen: true).widgetProps !=
+                if (Provider.of<UIProvider>(context, listen: true)
+                        .selectedWidgetData !=
                     null)
-
-                  Container(
-                    
-                    height: size.height*0.8,
+                  Expanded(
                     child: ListView.builder(
-                      itemCount: Provider.of<UIProvider>(context, listen: false).widgetProps!.keys.length ,
+                      itemCount: Provider.of<UIProvider>(context, listen: false)
+                          .selectedWidgetData!
+                          .keys
+                          .length,
                       itemBuilder: (context, index) {
-                        print("index $index");
-                        print("Provider.of<UIProvider>(context, listen: false).widgetprops $Provider.of<UIProvider>(context, listen: false).widgetProps");
-                        final key = Provider.of<UIProvider>(context, listen: false).widgetProps?.keys.elementAt(index);
-                        final values = Provider.of<UIProvider>(context, listen: false).widgetProps?[key];
-                        print("key $key value $values");
-                        List<DropdownMenuItem<String>>? dropdownItems = [];
-
-                        // if (value is Map) {
-                        //   print("value $value");
-                        //   dropdownItems = value.keys
-                        //       .map((dropdownKey) {
-                        //         return DropdownMenuItem(
-                        //           value: dropdownKey,
-                        //           child: Text(value[dropdownKey] ?? ''),
-                        //         );
-                        //       })
-                        //       .cast<DropdownMenuItem<String>>()
-                        //       .toList();
-                        // }
-                        for(var value in values){
-                          dropdownItems.add(DropdownMenuItem(child: Text(value),value: value,));
-                        }
-                        print(dropdownItems);
-                        return Container(
-                        
-                          child: DropdownButton(
-                            
-                            items: dropdownItems,
-                            onChanged: (selectedValue) {
-                              // Handle dropdown value change
-                            },
-                          ),
-                        );
+                        final key =
+                            Provider.of<UIProvider>(context, listen: false)
+                                .selectedWidgetData
+                                ?.keys
+                                .elementAt(index);
+                        final values =
+                            Provider.of<UIProvider>(context, listen: false)
+                                .selectedWidgetData?[key];
+                        return Center(
+                            child: CustomDropDown(
+                          dropDownValues: (values as List)
+                              .map((e) => e.toString())
+                              .toList(),
+                          dropDownName: key,
+                          height: 60,
+                          width: 500,
+                          openHeight: 200,
+                          onChanged: (String value) {
+                            print(value);
+                          },
+                        ));
                       },
                     ),
-                  )
+                  ),
               ],
             ),
             TreeView.simple(
@@ -116,18 +116,12 @@ class HomeViewState extends State<HomeView> {
               expansionIndicatorBuilder: (context, node) =>
                   NoExpansionIndicator(tree: node),
               indentation: const Indentation(style: IndentStyle.roundJoint),
-              
-              onItemTap: (item) async{
+              onItemTap: (item) async {
                 if (kDebugMode) print("Item tapped: ${item.key}");
-                print("children ${item.childrenAsList}");
-                Provider.of<UIProvider>(context, listen: false).selectedWidget =
-                    item.data;
-                Provider.of<UIProvider>(context, listen: false).widgetProps = await Provider.of<UIProvider>(context, listen: false).loadJsonFromAssets("json/widgets.json");
-                print(
-                    "item ${Provider.of<UIProvider>(context, listen: false).selectedWidget}");
-                    print(Provider.of<UIProvider>(context, listen: false).widgetProps);
+
+                Provider.of<UIProvider>(context, listen: false)
+                    .selectedWidgetData = item.data;
               },
-              
               onTreeReady: (controller) {
                 _controller = controller;
                 if (expandChildrenOnReady)
@@ -159,8 +153,22 @@ class HomeViewState extends State<HomeView> {
                                   enabledBorder: InputBorder.none,
                                 ),
                                 onChanged: (value) {
-                                  node.data = value;
+                                  print(value);
+                                  if (Provider.of<UIProvider>(context,
+                                          listen: false)
+                                      .widgetProps!
+                                      .keys
+                                      .contains(value)) {
+                                    node.data = Provider.of<UIProvider>(context,
+                                            listen: false)
+                                        .widgetProps![value];
+                                  } else {
+                                    node.data = value;
+                                  }
                                 },
+                                // onSaved: (newValue) {
+                                //   Provider.of<UIProvider>(context, listen: false).resultWidgets.a
+                                // },
                               ),
                             ),
                           ),
@@ -178,8 +186,7 @@ class HomeViewState extends State<HomeView> {
                         ),
                         IconButton(
                           icon: Icon(Icons.delete,
-                              color: Color.fromRGBO(245, 71, 71,
-                                  1)), // Add another icon for a different action
+                              color: Color.fromRGBO(245, 71, 71, 1)),
                           onPressed: () {
                             node.parent!.remove(node);
                           },
