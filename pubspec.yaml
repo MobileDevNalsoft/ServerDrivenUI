@@ -32,14 +32,18 @@ dependencies:
     sdk: flutter
   animated_tree_view: ^2.2.0
   split_view: ^3.2.1
-
+  customs:
+    git:
+      url: https://github.com/MobileDevNalsoft/Customs
+      ref: master
+  extract: ^0.0.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   mirai: ^0.7.0
   provider: ^6.1.2
-  dynamic_widget: ^5.0.0
+  # dynamic_widget: ^5.0.0
   json_dynamic_widget: ^7.1.0+7
 
 dev_dependencies:

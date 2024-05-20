@@ -1,13 +1,18 @@
+import 'dart:convert';
+
 import 'package:animated_tree_view/tree_view/tree_node.dart';
 import 'package:animated_tree_view/tree_view/tree_view.dart';
 import 'package:animated_tree_view/tree_view/widgets/expansion_indicator.dart';
 import 'package:animated_tree_view/tree_view/widgets/indent.dart';
 import 'package:customs/src.dart';
+import 'package:extract/extract.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:server_driven_ui/Providers/ui_provider.dart';
 import 'package:split_view/split_view.dart';
+
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key, required this.title}) : super(key: key);
@@ -21,6 +26,7 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> {
   final showSnackBar = false;
   final expandChildrenOnReady = true;
+  var callBacks;
   TreeViewController? _controller;
 
   @override
@@ -41,6 +47,7 @@ class HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      
       backgroundColor: Color.fromRGBO(22, 27, 33, 1),
       floatingActionButton: ValueListenableBuilder<bool>(
         valueListenable: sampleTree.expansionNotifier,
@@ -90,9 +97,16 @@ class HomeViewState extends State<HomeView> {
                                 .elementAt(index);
                         final values =
                             Provider.of<UIProvider>(context, listen: false)
-                                .selectedWidgetData?[key];
+                                .selectedWidgetData?[key]["properties"];
                         return Center(
                             child: CustomDropDown(
+                          dropDownValue: Provider.of<UIProvider>(context,
+                                          listen: false)
+                                      .selectedWidgetData?[key]["value"] ==
+                                  ""
+                              ? null
+                              : Provider.of<UIProvider>(context, listen: false)
+                                  .selectedWidgetData?[key]["value"],
                           dropDownValues: (values as List)
                               .map((e) => e.toString())
                               .toList(),
@@ -101,12 +115,60 @@ class HomeViewState extends State<HomeView> {
                           width: 500,
                           openHeight: 200,
                           onChanged: (String value) {
-                            print(value);
+                            TreeNode node = sampleTree;
+                            callBacks.call(
+                                Provider.of<UIProvider>(context, listen: false)
+                                    .selectedWidgetKey,
+                                Provider.of<UIProvider>(context, listen: false)
+                                    .selectedWidgetData
+                                    ?.keys
+                                    .elementAt(index),
+                                value);
+                            // void updatePropertyValue(
+                            //     String key, TreeNode node) {
+                            //   // if (node.childrenAsList.isEmpty) return;
+                            //   // node.childrenAsList.forEach((element) {
+                            //   //   print("${element.key}");
+                            //   //   if (element.key.toString() == key) {
+                            //   //     print("keyyy $element");
+                            //   //     element.data
+                            //   //     return;
+                            //   //   }
+                            //   // });
+                            // }
+                            // updatePropertyValue(
+                            //     Provider.of<UIProvider>(context, listen: false)
+                            //         .selectedWidgetKey
+                            //         .toString(),
+                            //     node);
                           },
                         ));
                       },
                     ),
                   ),
+                TextButton(
+                    onPressed: () {
+
+                      String text = 'Here is a Dart code snippet:\n```dart\nvoid main() {\n  print("Hello, world!");\n}\n```';
+List<String> extractedCode = Extract.codeSnippets(text, language: 'dart');
+print(extractedCode);
+// Result: ['void main() {\n  print("Hello, world!");\n}']
+                      // var code ="""()=>{print(object);}""";
+                      // var fun = Extract.codeSnippets(code, language: 'dart');
+                      // print("type ${fun}");
+                      // TreeNode node = sampleTree;
+                      // void printNode(TreeNode node) {
+                      //   print("data ${node.data}");
+                      //   if (node.childrenAsList.isEmpty) return;
+                      //   node.childrenAsList.forEach((element) {
+                      //     printNode(element as TreeNode);
+                      //   });
+                      // }
+
+                      // printNode(node);
+                      
+                    },
+                    child: Text("Generate")),
               ],
             ),
             TreeView.simple(
@@ -116,11 +178,20 @@ class HomeViewState extends State<HomeView> {
               expansionIndicatorBuilder: (context, node) =>
                   NoExpansionIndicator(tree: node),
               indentation: const Indentation(style: IndentStyle.roundJoint),
-              onItemTap: (item) async {
+              onItemTap: (item) {
                 if (kDebugMode) print("Item tapped: ${item.key}");
-
+                print(item.data);
                 Provider.of<UIProvider>(context, listen: false)
-                    .selectedWidgetData = item.data;
+                    .selectedWidgetData = item.data["props"];
+                Provider.of<UIProvider>(context, listen: false)
+                    .selectedWidgetKey = item.key;
+                callBacks = (key, property, value) => {
+                      if (item.key == key)
+                        {
+                          item.data["props"][property]["value"] = value,
+                          print(item.data)
+                        }
+                    };
               },
               onTreeReady: (controller) {
                 _controller = controller;
@@ -143,7 +214,8 @@ class HomeViewState extends State<HomeView> {
                               transform: Matrix4.translationValues(
                                   size.width * 0.025, -size.height * 0.016, 0),
                               child: TextFormField(
-                                initialValue: "${node.data}",
+                                initialValue:
+                                    "${node.data != null ? node.data["name"] : "Null"}",
                                 cursorColor: Colors.white,
                                 style: TextStyle(
                                     color: Colors.white,
@@ -154,17 +226,29 @@ class HomeViewState extends State<HomeView> {
                                 ),
                                 onChanged: (value) {
                                   print(value);
+                                  Provider.of<UIProvider>(context,
+                                          listen: false).selectedWidget = null;
+                                  
+                                  Provider.of<UIProvider>(context,
+                                          listen: false).selectedWidgetData = null;
+                                          
+                                  Provider.of<UIProvider>(context,
+                                          listen: false).selectedWidgetKey = null;                                          
                                   if (Provider.of<UIProvider>(context,
                                           listen: false)
                                       .widgetProps!
                                       .keys
-                                      .contains(value)) {
-                                    node.data = Provider.of<UIProvider>(context,
-                                            listen: false)
-                                        .widgetProps![value];
-                                  } else {
-                                    node.data = value;
+                                      .contains(value.toLowerCase())) {
+                                    node.data = {
+                                      "name": value.toLowerCase(),
+                                      "props": jsonDecode(jsonEncode(Provider
+                                              .of<UIProvider>(context,
+                                                  listen: false)
+                                          .widgetProps![value.toLowerCase()]))
+                                    };
+                                    print(node.data);
                                   }
+                                  
                                 },
                                 // onSaved: (newValue) {
                                 //   Provider.of<UIProvider>(context, listen: false).resultWidgets.a
@@ -177,10 +261,8 @@ class HomeViewState extends State<HomeView> {
                           icon: Icon(Icons.add_circle_rounded,
                               color: Color.fromRGBO(72, 236, 128, 1)),
                           onPressed: () {
-                            print("parent_key ${node.key}");
                             TreeNode newNode = TreeNode();
                             node..add(newNode);
-                            print("newnode ${newNode.key}");
                             _controller?.expandAllChildren(sampleTree);
                           },
                         ),
@@ -204,4 +286,4 @@ class HomeViewState extends State<HomeView> {
   }
 }
 
-final sampleTree = TreeNode.root()..add(TreeNode(key: "0"));
+final sampleTree = TreeNode.root()..add(TreeNode());

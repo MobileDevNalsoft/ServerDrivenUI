@@ -17,7 +17,9 @@ const showSnackBar = false;
 const expandChildrenOnReady = true;
 
 void main() {
-  runApp(MaterialApp(home: MultiProvider(
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: MultiProvider(
         providers: [ChangeNotifierProvider(create: (context) => UIProvider(),)],
         child: const HomeView(title: 'Simple Animated Tree Demo')),));
 }

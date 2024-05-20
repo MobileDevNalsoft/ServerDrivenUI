@@ -8,13 +8,12 @@ class UIProvider extends ChangeNotifier {
   Map? _selectedWidget;
   Map? _widgetProps;
   Map? _selectedWidgetData;
+  String? _selectedWidgetKey;
+
 
   Map? get selectedWidgetData => _selectedWidgetData;
   Map? get selectedWidget => _selectedWidget;
-  Map? resultWidgets;
-
-
-
+  String? get selectedWidgetKey => _selectedWidgetKey;
   Map? get widgetProps => _widgetProps;
   set widgetProps(value){
     _widgetProps =value;
@@ -27,6 +26,12 @@ class UIProvider extends ChangeNotifier {
 
   set selectedWidgetData(value) {
     _selectedWidgetData = value;
+    notifyListeners();
+  }
+
+
+  set selectedWidgetKey(value) {
+    _selectedWidgetKey = value;
     notifyListeners();
   }
 
