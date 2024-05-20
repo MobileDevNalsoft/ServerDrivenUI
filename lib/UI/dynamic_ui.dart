@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-// import 'package:dynamic_widget/dynamic_widget.dart';
 import 'package:json_dynamic_widget/json_dynamic_widget.dart';
 
 class DynamicUI extends StatefulWidget {
