@@ -32,7 +32,7 @@
                     "baseline"
                 ]
             },
-            "TextDirection":{
+            "TextDirection": {
                 "value": "",
                 "properties": [
                     "start",
@@ -61,8 +61,55 @@
                     "stretch",
                     "baseline"
                 ]
+            },
+            "children": {}
+        },
+        "card": {
+            "color": {
+                "value": "",
+                "properties": []
+            },
+            "shadowColor": {
+                "value": "",
+                "properties": []
+            },
+            "surfaceTintColor": {
+                "value": "",
+                "properties": []
+            },
+            "elevation": {
+                "value": "",
+                "properties": []
+            },
+            "shape": {
+                "value": "",
+                "properties": []
+            },
+            "borderOnForeground": {
+                "value": "true",
+                "properties": [
+                    "true",
+                    "false"
+                ]
+            },
+            "margin": {
+                "value": "",
+                "properties": []
+            },
+            "clipBehavior": {
+                "value": "",
+                "properties": []
+            },
+            "child": {
+                
+            },
+            "semanticContainer": {
+                "value": "true",
+                "properties": [
+                    "true",
+                    "false"
+                ]
             }
-            
         }
     }
 }

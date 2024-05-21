@@ -5,14 +5,12 @@ import 'package:animated_tree_view/tree_view/tree_view.dart';
 import 'package:animated_tree_view/tree_view/widgets/expansion_indicator.dart';
 import 'package:animated_tree_view/tree_view/widgets/indent.dart';
 import 'package:customs/src.dart';
-import 'package:extract/extract.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:server_driven_ui/Providers/ui_provider.dart';
 import 'package:split_view/split_view.dart';
-
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key, required this.title}) : super(key: key);
@@ -47,7 +45,6 @@ class HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      
       backgroundColor: Color.fromRGBO(22, 27, 33, 1),
       floatingActionButton: ValueListenableBuilder<bool>(
         valueListenable: sampleTree.expansionNotifier,
@@ -74,7 +71,7 @@ class HomeViewState extends State<HomeView> {
           children: [
             Column(
               children: [
-                Text(
+                const Text(
                   "Properties",
                   style: TextStyle(
                     color: Colors.white,
@@ -95,78 +92,123 @@ class HomeViewState extends State<HomeView> {
                                 .selectedWidgetData
                                 ?.keys
                                 .elementAt(index);
-                        final values =
-                            Provider.of<UIProvider>(context, listen: false)
+                        final List values = (key == "children" ||
+                                key == "child")
+                            ? []
+                            : Provider.of<UIProvider>(context, listen: false)
                                 .selectedWidgetData?[key]["properties"];
-                        return Center(
-                            child: CustomDropDown(
-                          dropDownValue: Provider.of<UIProvider>(context,
-                                          listen: false)
-                                      .selectedWidgetData?[key]["value"] ==
-                                  ""
-                              ? null
-                              : Provider.of<UIProvider>(context, listen: false)
-                                  .selectedWidgetData?[key]["value"],
-                          dropDownValues: (values as List)
-                              .map((e) => e.toString())
-                              .toList(),
-                          dropDownName: key,
-                          height: 60,
-                          width: 500,
-                          openHeight: 200,
-                          onChanged: (String value) {
-                            TreeNode node = sampleTree;
-                            callBacks.call(
-                                Provider.of<UIProvider>(context, listen: false)
-                                    .selectedWidgetKey,
-                                Provider.of<UIProvider>(context, listen: false)
-                                    .selectedWidgetData
-                                    ?.keys
-                                    .elementAt(index),
-                                value);
-                            // void updatePropertyValue(
-                            //     String key, TreeNode node) {
-                            //   // if (node.childrenAsList.isEmpty) return;
-                            //   // node.childrenAsList.forEach((element) {
-                            //   //   print("${element.key}");
-                            //   //   if (element.key.toString() == key) {
-                            //   //     print("keyyy $element");
-                            //   //     element.data
-                            //   //     return;
-                            //   //   }
-                            //   // });
-                            // }
-                            // updatePropertyValue(
-                            //     Provider.of<UIProvider>(context, listen: false)
-                            //         .selectedWidgetKey
-                            //         .toString(),
-                            //     node);
-                          },
-                        ));
+                        return !(key == "children" || key == "child")
+                            ? Center(
+                                child: values.isNotEmpty
+                                    ? CustomDropDown(
+                                        dropDownValue: Provider.of<UIProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .selectedWidgetData?[
+                                                    key]["value"] ==
+                                                ""
+                                            ? null
+                                            : Provider.of<UIProvider>(context,
+                                                        listen: false)
+                                                    .selectedWidgetData?[key]
+                                                ["value"],
+                                        dropDownValues: (values as List)
+                                            .map((e) => e.toString())
+                                            .toList(),
+                                        dropDownName: key,
+                                        height: 60,
+                                        width: 500,
+                                        openHeight: 200,
+                                        onChanged: (String value) {
+                                          callBacks.call(
+                                              Provider.of<UIProvider>(context,
+                                                      listen: false)
+                                                  .selectedWidgetKey,
+                                              Provider.of<UIProvider>(context,
+                                                      listen: false)
+                                                  .selectedWidgetData
+                                                  ?.keys
+                                                  .elementAt(index),
+                                              value);
+                                          // void updatePropertyValue(
+                                          //     String key, TreeNode node) {
+                                          //   // if (node.childrenAsList.isEmpty) return;
+                                          //   // node.childrenAsList.forEach((element) {
+                                          //   //   print("${element.key}");
+                                          //   //   if (element.key.toString() == key) {
+                                          //   //     print("keyyy $element");
+                                          //   //     element.data
+                                          //   //     return;
+                                          //   //   }
+                                          //   // });
+                                          // }
+                                          // updatePropertyValue(
+                                          //     Provider.of<UIProvider>(context, listen: false)
+                                          //         .selectedWidgetKey
+                                          //         .toString(),
+                                          //     node);
+                                        },
+                                      )
+                                    : Center(
+                                        child: SizedBox(
+                                          height: 60,
+                                          width: 500,
+                                          child: Card(
+                                              child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 8.0, left: 8.0),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(key),
+                                                      Transform(
+                                                          transform: Matrix4
+                                                              .translationValues(
+                                                                  0, -15, 0),
+                                                          child: SizedBox(
+                                                              height: 20,
+                                                              child:
+                                                                  TextFormField(
+                                                                      onChanged:
+                                                                          (value) {
+                                                                        callBacks.call(
+                                                                            Provider.of<UIProvider>(context, listen: false).selectedWidgetKey,
+                                                                            Provider.of<UIProvider>(context, listen: false).selectedWidgetData?.keys.elementAt(index),
+                                                                            value);
+                                                                      },
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              15),
+                                                                      decoration:
+                                                                          InputDecoration(
+                                                                        contentPadding:
+                                                                            EdgeInsets.symmetric(vertical: -5),
+                                                                        border:
+                                                                            InputBorder.none,
+                                                                      )))),
+                                                    ],
+                                                  ))),
+                                        ),
+                                      ))
+                            : null;
                       },
                     ),
                   ),
                 TextButton(
                     onPressed: () {
+                      TreeNode node = sampleTree;
+                      void printNode(TreeNode node) {
+                        print("data ${node.data}");
+                        if (node.childrenAsList.isEmpty) return;
+                        node.childrenAsList.forEach((element) {
+                          printNode(element as TreeNode);
+                        });
+                      }
 
-                      String text = 'Here is a Dart code snippet:\n```dart\nvoid main() {\n  print("Hello, world!");\n}\n```';
-List<String> extractedCode = Extract.codeSnippets(text, language: 'dart');
-print(extractedCode);
-// Result: ['void main() {\n  print("Hello, world!");\n}']
-                      // var code ="""()=>{print(object);}""";
-                      // var fun = Extract.codeSnippets(code, language: 'dart');
-                      // print("type ${fun}");
-                      // TreeNode node = sampleTree;
-                      // void printNode(TreeNode node) {
-                      //   print("data ${node.data}");
-                      //   if (node.childrenAsList.isEmpty) return;
-                      //   node.childrenAsList.forEach((element) {
-                      //     printNode(element as TreeNode);
-                      //   });
-                      // }
-
-                      // printNode(node);
-                      
+                      printNode(node);
                     },
                     child: Text("Generate")),
               ],
@@ -227,13 +269,16 @@ print(extractedCode);
                                 onChanged: (value) {
                                   print(value);
                                   Provider.of<UIProvider>(context,
-                                          listen: false).selectedWidget = null;
-                                  
+                                          listen: false)
+                                      .selectedWidget = null;
+
                                   Provider.of<UIProvider>(context,
-                                          listen: false).selectedWidgetData = null;
-                                          
+                                          listen: false)
+                                      .selectedWidgetData = null;
+
                                   Provider.of<UIProvider>(context,
-                                          listen: false).selectedWidgetKey = null;                                          
+                                          listen: false)
+                                      .selectedWidgetKey = null;
                                   if (Provider.of<UIProvider>(context,
                                           listen: false)
                                       .widgetProps!
@@ -244,11 +289,16 @@ print(extractedCode);
                                       "props": jsonDecode(jsonEncode(Provider
                                               .of<UIProvider>(context,
                                                   listen: false)
-                                          .widgetProps![value.toLowerCase()]))
+                                          .widgetProps![value.toLowerCase()])),
+                                      "key": node.key
                                     };
+                                   
                                     print(node.data);
                                   }
-                                  
+                                  else{
+                                    node.data =null;
+                                     print("nodedata ${node.data}");
+                                  }
                                 },
                                 // onSaved: (newValue) {
                                 //   Provider.of<UIProvider>(context, listen: false).resultWidgets.a
@@ -257,15 +307,33 @@ print(extractedCode);
                             ),
                           ),
                         ),
-                        IconButton(
-                          icon: Icon(Icons.add_circle_rounded,
-                              color: Color.fromRGBO(72, 236, 128, 1)),
-                          onPressed: () {
-                            TreeNode newNode = TreeNode();
-                            node..add(newNode);
-                            _controller?.expandAllChildren(sampleTree);
-                          },
-                        ),
+                        if (node.data != null &&
+                            (node.data["props"] as Map)
+                                .keys
+                                .contains("child") &&
+                            node.childrenAsList.isEmpty)
+                          IconButton(
+                            icon: Icon(Icons.add_circle_rounded,
+                                color: Color.fromRGBO(72, 236, 128, 1)),
+                            onPressed: () {
+                              TreeNode newNode = TreeNode();
+                              node..add(newNode);
+                              _controller?.expandAllChildren(sampleTree);
+                            },
+                          )
+                        else if (node.data != null &&
+                            (node.data["props"] as Map)
+                                .keys
+                                .contains("children"))
+                          IconButton(
+                            icon: Icon(Icons.add_circle_rounded,
+                                color: Color.fromRGBO(72, 236, 128, 1)),
+                            onPressed: () {
+                              TreeNode newNode = TreeNode();
+                              node..add(newNode);
+                              _controller?.expandAllChildren(sampleTree);
+                            },
+                          ),
                         IconButton(
                           icon: Icon(Icons.delete,
                               color: Color.fromRGBO(245, 71, 71, 1)),
