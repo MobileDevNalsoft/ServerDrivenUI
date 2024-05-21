@@ -1,13 +1,68 @@
 {
     "widgets": {
         "column": {
-            "MainAxisAlignment": ["start","end","center","spaceBetween","spaceAround","spaceEvenly"],
-            "MainAxisSize": ["start","end","center","stretch","baseline"],
-            "CrossAxisAlignment": [],
-            "TextDirection": [],
-            "VerticalDirection": [],
-            "TextBaseline": [],
-            "children": []
+            "MainAxisAlignment": {
+                "value": "",
+                "properties": [
+                    "start",
+                    "end",
+                    "center",
+                    "spaceBetween",
+                    "spaceAround",
+                    "spaceEvenly"
+                ]
+            },
+            "MainAxisSize": {
+                "value": "",
+                "properties": [
+                    "start",
+                    "end",
+                    "center",
+                    "stretch",
+                    "baseline"
+                ]
+            },
+            "CrossAxisAlignment": {
+                "value": "",
+                "properties": [
+                    "start",
+                    "end",
+                    "center",
+                    "stretch",
+                    "baseline"
+                ]
+            },
+            "TextDirection":{
+                "value": "",
+                "properties": [
+                    "start",
+                    "end",
+                    "center",
+                    "stretch",
+                    "baseline"
+                ]
+            },
+            "VerticalDirection": {
+                "value": "",
+                "properties": [
+                    "start",
+                    "end",
+                    "center",
+                    "stretch",
+                    "baseline"
+                ]
+            },
+            "TextBaseline": {
+                "value": "",
+                "properties": [
+                    "start",
+                    "end",
+                    "center",
+                    "stretch",
+                    "baseline"
+                ]
+            }
+            
         }
     }
 }
