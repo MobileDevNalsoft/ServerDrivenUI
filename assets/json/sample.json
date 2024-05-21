@@ -1,0 +1,184 @@
+{
+    "type": "dy_scaffold",
+    "data": {
+      "key": "123456",
+      "pageTitle": "Flutter Server UI Home Screen",
+      "child": {
+        "type": "dy_column",
+        "data": {
+          "key": "423243",
+          "children": [
+            {
+              "type": "dy_gesture_detector",
+              "data": {
+                "key": "1234234",
+                "onTapAction": {
+                  "actionString": "/moveToScreen",
+                  "extras": {
+                    "url": "https://raw.githubusercontent.com/Arunshaik2001/demo_server_driven_ui/master/assets/json/dy_scaffold.json",
+                    "urlType": "network",
+                    "requestType": "get",
+                    "navigationType": "screen",
+                    "navigationStyle": "push",
+                    "loaderWidgetAssetPath": "assets/json/loader.json"
+                  }
+                },
+                "child": {
+                  "type": "dy_widget_card",
+                  "data": {
+                    "key": "1323",
+                    "margin": "10",
+                    "elevation": 10,
+                    "padding": "10",
+                    "borderRadius": 10,
+                    "body": {
+                      "type": "dy_container",
+                      "data": {
+                        "key": "15345",
+                        "padding": "10,0,0,0",
+                        "child": {
+                          "type": "dy_column",
+                          "data": {
+                            "key": "2457231",
+                            "mainAxisAlignment": "spaceBetween",
+                            "crossAxisAlignment": "start",
+                            "children": [
+                              {
+                                "type": "dy_text",
+                                "data": {
+                                  "key": "1734233",
+                                  "text": "Scaffold",
+                                  "style": {
+                                    "color": "0xffff0000",
+                                    "fontSize": 20,
+                                    "fontWeight": "bold"
+                                  }
+                                }
+                              },
+                              {
+                                "type": "dy_container",
+                                "data": {
+                                  "key": "813123",
+                                  "width": 200,
+                                  "child": {
+                                    "type": "dy_text",
+                                    "data": {
+                                      "key": "8327757234",
+                                      "text": "a widget that provides basic structure for building app's layout.",
+                                      "maxLines": 3
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "prefixImage": {
+                      "type": "dy_image",
+                      "data": {
+                        "key": "16323233",
+                        "src": "assets/images/icon_scaffold.png",
+                        "height": 50,
+                        "width": 50,
+                        "imageType": "asset",
+                        "fit": "fill",
+                        "placeholderImagePath": "assets/images/icon_placeholder.png"
+                      }
+                    },
+                    "action": {
+                      "actionString": "/showSnackbar",
+                      "extras": {
+                        "title": "Scaffold"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "dy_gesture_detector",
+              "data": {
+                "key": "24234234",
+                "onTapAction": {
+                  "actionString": "/moveToScreen",
+                  "extras": {
+                    "url": "assets/json/container.json",
+                    "urlType": "local",
+                    "navigationType": "screen",
+                    "navigationStyle": "push"
+                  }
+                },
+                "child": {
+                  "type": "dy_widget_card",
+                  "data": {
+                    "key": "22323",
+                    "margin": "10",
+                    "elevation": 10,
+                    "padding": "10",
+                    "borderRadius": 10,
+                    "action": {
+                      "actionString": "/showSnackbar",
+                      "extras": {
+                        "title": "Container"
+                      }
+                    },
+                    "body": {
+                      "type": "dy_container",
+                      "data": {
+                        "key": "345345",
+                        "padding": "10,0,0,0",
+                        "child": {
+                          "type": "dy_column",
+                          "data": {
+                            "key": "2457231",
+                            "mainAxisAlignment": "spaceBetween",
+                            "crossAxisAlignment": "start",
+                            "children": [
+                              {
+                                "type": "dy_text",
+                                "data": {
+                                  "key": "2232734233",
+                                  "text": "Container",
+                                  "style": {
+                                    "color": "0xffff0000",
+                                    "fontSize": 20,
+                                    "fontWeight": "bold"
+                                  }
+                                }
+                              },
+                              {
+                                "type": "dy_text",
+                                "data": {
+                                  "key": "223667757234",
+                                  "text": "a widget that holds other widgets"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "prefixImage": {
+                      "type": "dy_image",
+                      "data": {
+                        "key": "2226323233",
+                        "src": "https://www.saloodo.com/wp-content/uploads/2021/09/container-1-1.png",
+                        "height": 50,
+                        "width": 50,
+                        "imageType": "network",
+                        "fit": "fill",
+                        "clipBorderRadius": 20,
+                        "placeholderImagePath": "assets/images/icon_placeholder.png"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
