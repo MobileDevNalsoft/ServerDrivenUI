@@ -5,11 +5,14 @@ import 'package:animated_tree_view/tree_view/tree_view.dart';
 import 'package:animated_tree_view/tree_view/widgets/expansion_indicator.dart';
 import 'package:animated_tree_view/tree_view/widgets/indent.dart';
 import 'package:customs/src.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:server_driven_ui/Providers/ui_provider.dart';
+import 'package:server_driven_ui/UI/colorPallete.dart';
 import 'package:split_view/split_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -37,8 +40,6 @@ class HomeViewState extends State<HomeView> {
     Provider.of<UIProvider>(context, listen: false).widgetProps =
         await Provider.of<UIProvider>(context, listen: false)
             .loadJsonFromAssets('json/widgets.json');
-    print(
-        "widgets ${Provider.of<UIProvider>(context, listen: false).widgetProps}");
   }
 
   @override
@@ -82,36 +83,39 @@ class HomeViewState extends State<HomeView> {
                     null)
                   Expanded(
                     child: ListView.builder(
-                      itemCount: Provider.of<UIProvider>(context, listen: false)
-                          .selectedWidgetData!
+                      itemCount: Provider.of<UIProvider>(context, listen: true)
+                          .selectedWidgetData!["props"]!
                           .keys
                           .length,
                       itemBuilder: (context, index) {
                         final key =
-                            Provider.of<UIProvider>(context, listen: false)
-                                .selectedWidgetData
+                            Provider.of<UIProvider>(context, listen: true)
+                                .selectedWidgetData!["props"]
                                 ?.keys
                                 .elementAt(index);
-                        final List values = (key == "children" ||
-                                key == "child")
-                            ? []
-                            : Provider.of<UIProvider>(context, listen: false)
-                                .selectedWidgetData?[key]["properties"];
+                        final List values =
+                            (key == "children" || key == "child")
+                                ? []
+                                : Provider.of<UIProvider>(context, listen: true)
+                                        .selectedWidgetData!["props"]?[key]
+                                    ["properties"];
+                        // print(
+                        //     "current value $key ${Provider.of<UIProvider>(context, listen: true).selectedWidgetData!["props"]?[key]} ${Provider.of<UIProvider>(context, listen: true).selectedWidgetData!["props"]?[key]["value"]}");
                         return !(key == "children" || key == "child")
                             ? Center(
                                 child: values.isNotEmpty
                                     ? CustomDropDown(
                                         dropDownValue: Provider.of<UIProvider>(
                                                             context,
-                                                            listen: false)
-                                                        .selectedWidgetData?[
-                                                    key]["value"] ==
+                                                            listen: true)
+                                                        .selectedWidgetData![
+                                                    "props"]?[key]["value"] ==
                                                 ""
                                             ? null
                                             : Provider.of<UIProvider>(context,
-                                                        listen: false)
-                                                    .selectedWidgetData?[key]
-                                                ["value"],
+                                                        listen: true)
+                                                    .selectedWidgetData![
+                                                "props"]?[key]["value"],
                                         dropDownValues: (values as List)
                                             .map((e) => e.toString())
                                             .toList(),
@@ -126,7 +130,7 @@ class HomeViewState extends State<HomeView> {
                                                   .selectedWidgetKey,
                                               Provider.of<UIProvider>(context,
                                                       listen: false)
-                                                  .selectedWidgetData
+                                                  .selectedWidgetData!["props"]
                                                   ?.keys
                                                   .elementAt(index),
                                               value);
@@ -169,26 +173,68 @@ class HomeViewState extends State<HomeView> {
                                                               .translationValues(
                                                                   0, -15, 0),
                                                           child: SizedBox(
-                                                              height: 20,
-                                                              child:
-                                                                  TextFormField(
-                                                                      onChanged:
-                                                                          (value) {
-                                                                        callBacks.call(
-                                                                            Provider.of<UIProvider>(context, listen: false).selectedWidgetKey,
-                                                                            Provider.of<UIProvider>(context, listen: false).selectedWidgetData?.keys.elementAt(index),
-                                                                            value);
-                                                                      },
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              15),
-                                                                      decoration:
-                                                                          InputDecoration(
-                                                                        contentPadding:
-                                                                            EdgeInsets.symmetric(vertical: -5),
-                                                                        border:
-                                                                            InputBorder.none,
-                                                                      )))),
+                                                            height: 20,
+                                                            child: Consumer<
+                                                                    UIProvider>(
+                                                                builder: (context,
+                                                                        provider,
+                                                                        child) {
+                                                                          TextEditingController textEditingController =  TextEditingController(
+                                                                           );
+                                                                          return
+                                                                    TextFormField(
+                                                                        controller: textEditingController,
+                                                                        onChanged:
+                                                                            (value) {
+                                                                          callBacks.call(
+                                                                              provider.selectedWidgetKey,
+                                                                              provider.selectedWidgetData!["props"]?.keys.elementAt(index),
+                                                                              value);
+                                                                        },
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                15),
+                                                                        decoration:
+                                                                            InputDecoration(
+                                                                          suffixIcon:(provider.selectedWidgetData!["props"]?[key]["type"]=="color")? IconButton(
+                                                                              onPressed: () {
+                                                                                showDialog(
+                                                                                  context: context,
+                                                                                  builder: (context) {
+                                                                                    return AlertDialog(
+                                                                                      title: const Text('Pick a color!'),
+                                                                                      content: SingleChildScrollView(
+                                                                                        child: ColorPicker(
+                                                                                          pickerColor: Color(0xff443a49),
+                                                                                          onColorChanged: (value) {
+                                                                                            textEditingController.text = value.toString();
+                                                                                              callBacks.call(
+                                                                              provider.selectedWidgetKey,
+                                                                              provider.selectedWidgetData!["props"]?.keys.elementAt(index),
+                                                                              textEditingController.text);
+                                                                                          },
+                                                                                        ),
+                                                                                      ),
+                                                                                      actions: <Widget>[
+                                                                                        ElevatedButton(
+                                                                                          child: const Text('Got it'),
+                                                                                          onPressed: () {
+                                                                                            // setState(() => currentColor = pickerColor);
+                                                                                            Navigator.of(context).pop();
+                                                                                          },
+                                                                                        ),
+                                                                                      ],
+                                                                                    );
+                                                                                  },
+                                                                                );
+                                                                              },
+                                                                              icon: Icon(Icons.color_lens_rounded)):null,
+                                                                          contentPadding:
+                                                                              EdgeInsets.symmetric(vertical: -5),
+                                                                          border:
+                                                                              InputBorder.none,
+                                                                        ));}),
+                                                          )),
                                                     ],
                                                   ))),
                                         ),
@@ -200,17 +246,31 @@ class HomeViewState extends State<HomeView> {
                 TextButton(
                     onPressed: () {
                       TreeNode node = sampleTree;
-                      void printNode(TreeNode node) {
-                        print("data ${node.data}");
-                        if (node.childrenAsList.isEmpty) return;
-                        node.childrenAsList.forEach((element) {
-                          printNode(element as TreeNode);
-                        });
-                      }
+                      List<dynamic> generateJson(TreeNode widget) {
+                        var res = [];
 
-                      printNode(node);
+                        if (widget.childrenAsList.isEmpty) return [];
+                        widget.children.forEach((key, value) {
+                          var name = {
+                            "type": (value as TreeNode).data["name"],
+                          };
+                          var props = {};
+                          (value.data["props"] as Map).forEach((key, value) {
+                            if (value["value"] != "")
+                              props.addAll({key: value["value"]});
+                          });
+                          if (props["children"] != null)
+                            props["children"] = generateJson(value);
+                          else {
+                            props["child"] = generateJson(value);
+                          }
+                          res.add({...name, ...props});
+                        });
+                        return res;
+                      }
                     },
                     child: Text("Generate")),
+               
               ],
             ),
             TreeView.simple(
@@ -221,17 +281,18 @@ class HomeViewState extends State<HomeView> {
                   NoExpansionIndicator(tree: node),
               indentation: const Indentation(style: IndentStyle.roundJoint),
               onItemTap: (item) {
-                if (kDebugMode) print("Item tapped: ${item.key}");
-                print(item.data);
                 Provider.of<UIProvider>(context, listen: false)
-                    .selectedWidgetData = item.data["props"];
+                    .selectedWidgetData = null;
+                if (kDebugMode) print("Item tapped: ${item.key}");
+                // print(item.data);
+                Provider.of<UIProvider>(context, listen: false)
+                    .selectedWidgetData = item.data;
                 Provider.of<UIProvider>(context, listen: false)
                     .selectedWidgetKey = item.key;
                 callBacks = (key, property, value) => {
                       if (item.key == key)
                         {
                           item.data["props"][property]["value"] = value,
-                          print(item.data)
                         }
                     };
               },
@@ -267,11 +328,6 @@ class HomeViewState extends State<HomeView> {
                                   enabledBorder: InputBorder.none,
                                 ),
                                 onChanged: (value) {
-                                  print(value);
-                                  Provider.of<UIProvider>(context,
-                                          listen: false)
-                                      .selectedWidget = null;
-
                                   Provider.of<UIProvider>(context,
                                           listen: false)
                                       .selectedWidgetData = null;
@@ -292,12 +348,8 @@ class HomeViewState extends State<HomeView> {
                                           .widgetProps![value.toLowerCase()])),
                                       "key": node.key
                                     };
-                                   
-                                    print(node.data);
-                                  }
-                                  else{
-                                    node.data =null;
-                                     print("nodedata ${node.data}");
+                                  } else {
+                                    node.data = null;
                                   }
                                 },
                                 // onSaved: (newValue) {

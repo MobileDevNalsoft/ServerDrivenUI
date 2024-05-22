@@ -5,27 +5,24 @@ import 'package:flutter/services.dart';
 
 class UIProvider extends ChangeNotifier {
 
-  Map? _selectedWidget;
   Map? _widgetProps;
   Map? _selectedWidgetData;
   String? _selectedWidgetKey;
 
 
   Map? get selectedWidgetData => _selectedWidgetData;
-  Map? get selectedWidget => _selectedWidget;
+
   String? get selectedWidgetKey => _selectedWidgetKey;
   Map? get widgetProps => _widgetProps;
   set widgetProps(value){
     _widgetProps =value;
     // notifyListeners();
   }
-  set selectedWidget(value) {
-    _selectedWidget = value;
-    notifyListeners();
-  }
+
 
   set selectedWidgetData(value) {
     _selectedWidgetData = value;
+    print("selected widget data from provider $_selectedWidgetData");
     notifyListeners();
   }
 

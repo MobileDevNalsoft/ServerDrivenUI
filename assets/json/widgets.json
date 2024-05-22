@@ -67,14 +67,17 @@
         "card": {
             "color": {
                 "value": "",
+                "type":"color",
                 "properties": []
             },
             "shadowColor": {
                 "value": "",
+                "type":"color",
                 "properties": []
             },
             "surfaceTintColor": {
                 "value": "",
+                "type":"color",
                 "properties": []
             },
             "elevation": {
