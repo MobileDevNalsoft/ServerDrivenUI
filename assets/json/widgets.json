@@ -4,80 +4,74 @@
             "MainAxisAlignment": {
                 "value": "",
                 "properties": [
-                    "start",
-                    "end",
-                    "center",
-                    "spaceBetween",
-                    "spaceAround",
-                    "spaceEvenly"
-                ]
+                    "MainAxisAlignment.start",
+                    "MainAxisAlignment.end",
+                    "MainAxisAlignment.center",
+                    "MainAxisAlignment.spaceBetween",
+                    "MainAxisAlignment.spaceAround",
+                    "MainAxisAlignment.spaceEvenly"
+                ],
+                "type": "dropdown"
             },
             "MainAxisSize": {
                 "value": "",
                 "properties": [
-                    "start",
-                    "end",
-                    "center",
-                    "stretch",
-                    "baseline"
-                ]
+                    "MainAxisSize.max",
+                    "MainAxisSize.min"
+                ],
+                "type": "dropdown"
             },
             "CrossAxisAlignment": {
                 "value": "",
                 "properties": [
-                    "start",
-                    "end",
-                    "center",
-                    "stretch",
-                    "baseline"
-                ]
+                    "CrossAxisAlignment.start",
+                    "CrossAxisAlignment.end",
+                    "CrossAxisAlignment.center",
+                    "CrossAxisAlignment.stretch",
+                    "CrossAxisAlignment.baseline"
+                ],
+                "type": "dropdown"
             },
             "TextDirection": {
                 "value": "",
                 "properties": [
-                    "start",
-                    "end",
-                    "center",
-                    "stretch",
-                    "baseline"
-                ]
+                    "TextDirection.ltr",
+                    "TextDirection.rtl"
+                ],
+                "type": "dropdown"
             },
             "VerticalDirection": {
                 "value": "",
                 "properties": [
-                    "start",
-                    "end",
-                    "center",
-                    "stretch",
-                    "baseline"
-                ]
+                    "VerticalDirection.up",
+                    "VerticalDirection.down"
+                ],
+                "type": "dropdown"
             },
             "TextBaseline": {
                 "value": "",
                 "properties": [
-                    "start",
-                    "end",
-                    "center",
-                    "stretch",
-                    "baseline"
-                ]
+                    "TextBaseline.alphabetic",
+                    "TextBaseline.ideographic"
+                ],
+                "type": "dropdown"
             },
             "children": {}
         },
         "card": {
             "color": {
-                "value": "",
-                "type":"color",
+                "value": "FFA22DDC",
+                "type": "color",
                 "properties": []
             },
             "shadowColor": {
                 "value": "",
-                "type":"color",
+                "type": "color",
                 "properties": []
             },
             "surfaceTintColor": {
                 "value": "",
-                "type":"color",
+                "type": "color",
                 "properties": []
             },
             "elevation": {
@@ -103,14 +97,321 @@
                 "value": "",
                 "properties": []
             },
-            "child": {
-                
-            },
+            "child": {},
             "semanticContainer": {
                 "value": "true",
                 "properties": [
                     "true",
                     "false"
+                ]
+            }
+        },
+        "Text": {
+            "data": {
+                "value": "",
+                "properties": [],
+                "type": ""
+            },
+            "style": {
+                "type": "widget",
+                "widget": "TextStyle"
+            },
+            "StrutStyle": {
+                "type": "widget",
+                "widget": "StrutStyle"
+            },
+            "textAlign": {
+                "value": "",
+                "properties": [
+                    "TextAlign.left",
+                    "TextAlign.right",
+                    "TextAlign.center",
+                    "TextAlign.justify",
+                    "TextAlign.start",
+                    "TextAlign.end"
+                ],
+                "type": "dropdown"
+            },
+            "textDirection": {
+                "value": "",
+                "properties": [
+                    "TextDirection.ltr",
+                    "TextDirection.rtl"
+                ],
+                "type": "dropdown"
+            },
+            "locale": {
+                "type": "widget",
+                "widget": "StrutStyle"
+            },
+            "softWrap": {
+                "value": "",
+                "properties": [
+                    "false",
+                    "true"
+                ],
+                "type": "dropdown"
+            },
+            "overflow": {
+                "value": "",
+                "properties": [
+                    "TextOverflow.clip",
+                    "TextOverflow.fade",
+                    "TextOverflow.ellipsis",
+                    "TextOverflow.visible"
+                ],
+                "type": "dropdown"
+            },
+            "textScaleFactor": {
+                "type": "number",
+                "value": ""
+            },
+            "textScaler": {},
+            "maxLines": {
+                "type": "number",
+                "value": ""
+            },
+            "semanticsLabel": {
+                "type": "textfield",
+                "value": ""
+            },
+            "textWidthBasis": {
+                "value": "",
+                "properties": [
+                    "TextWidthBasis.parent",
+                    "TextWidthBasis.longestLine"
+                ],
+                "type": "dropdown"
+            },
+            "textHeightBehavior": {},
+            "selectionColor": {}
+        },
+        "TextStyle": {
+            "inherit": {
+                "value": "true",
+                "properties": [
+                    "true",
+                    "false"
+                ]
+            },
+            "color": {
+                "value": "FFA22DDC",
+                "type": "color",
+                "properties": []
+            },
+            "backgroundColor": {
+                "value": "FFA22DDC",
+                "type": "color",
+                "properties": []
+            },
+            "fontSize": {
+                "type": "number",
+                "value": ""
+            },
+            "fontWeight": {
+                "type": "widget",
+                "widget": "FontWeight"
+            },
+            "fontStyle": {
+                "type": "dropdown",
+                "value": "FontStyle.normal",
+                "properties": [
+                    "FontStyle.normal",
+                    "FontStyle.italic"
+                ]
+            },
+            "letterSpacing": {
+                "type": "number",
+                "value": ""
+            },
+            "wordSpacing": {
+                "type": "number",
+                "value": ""
+            },
+            "textBaseline": {
+                "type": "dropdown",
+                "value": "FontStyle.normal",
+                "properties": [
+                    "TextBaseline.alphabetic",
+                    "TextBaseline.ideographic"
+                ]
+            },
+            "height": {
+                "type": "number",
+                "value": ""
+            },
+            "leadingDistribution": {
+                "type": "dropdown",
+                "value": "",
+                "properties": [
+                    "TextLeadingDistribution.proportional",
+                    "TextLeadingDistribution.even"
+                ]
+            },
+            "locale":  {
+                "type": "widget",
+                "widget": "TextDecoration"
+            },
+            "shadows": {
+                "type": "widget",
+                "widget": "Shadow"
+            },
+            "decoration": {
+                "type": "widget",
+                "widget": "TextDecoration"
+            },
+            "decorationColor":  {
+                "value": "FFA22DDC",
+                "type": "color",
+                "properties": []
+            },
+            "decorationStyle": {
+                "type": "dropdown",
+                "value": "",
+                "properties": [
+                    "solid",
+                    "double",
+                    "double",
+                    "dashed",
+                    "wavy"
+                ]
+            },
+            "decorationThickness": {
+                "type": "number",
+                "value": ""
+            },
+            "debugLabel": {
+                "type": "textfield",
+                "value": ""
+            },
+            "fontFamily": {
+                "type": "textfield",
+                "value": ""
+            },
+            "fontFamilyFallback": {
+                "type": "textfield",
+                "value": ""
+            },
+            "package": {
+                "type": "textfield",
+                "value": ""
+            }
+        },
+        "Shadow":{
+            "color":{
+                "value": "FFA22DDC",
+                "type": "color",
+                "properties": []
+            },
+            "offset":{
+                "type": "widget",
+                "widget": "Offset"
+            },
+            "blurRadius": {
+                "type": "number",
+                "value": ""
+            }
+        },
+        "Offset":{
+            "dx":{
+                "type": "number",
+                "value": ""
+            },
+            "dy":{
+                "type": "number",
+                "value": ""
+            }
+        },
+        "Locale": {
+            "Locale": {
+                "type": "textfield",
+                "value": ""
+            }
+        },
+        "StrutStyle": {
+            "fontFamily": {
+                "type": "textfield",
+                "value": ""
+            },
+            "fontFamilyFallback": {
+                "type": "widget",
+                "widget": "TextStyle"
+            },
+            "fontSize": {
+                "type": "number",
+                "value": ""
+            },
+            "height": {
+                "value": "",
+                "type": "number"
+            },
+            "leadingDistribution": {
+                "type": "dropdown",
+                "value": "",
+                "properties": [
+                    "TextLeadingDistribution.proportional",
+                    "TextLeadingDistribution.even"
+                ]
+            },
+            "leading": {
+                "value": "",
+                "type": "number"
+            },
+            "fontWeight": {
+                "type": "widget",
+                "widget": "FontWeight"
+            },
+            "fontStyle": {
+                "type": "dropdown",
+                "value": "FontStyle.normal",
+                "properties": [
+                    "FontStyle.normal",
+                    "FontStyle.italic"
+                ]
+            },
+            "forceStrutHeight": {
+                "type": "dropdown",
+                "value": "",
+                "properties": [
+                    "true",
+                    "false"
+                ]
+            },
+            "debugLabel": {
+                "type": "textfield",
+                "value": ""
+            },
+            "package": {
+                "type": "textfield",
+                "value": ""
+            }
+        },
+        "FontWeight": {
+            "type": "dropdown",
+            "value": "",
+            "properties": [
+                "FontWeight.normal",
+                "FontWeight.bold",
+                "FontWeight.w100",
+                "FontWeight.w200",
+                "FontWeight.w300",
+                "FontWeight.w400",
+                "FontWeight.w500",
+                "FontWeight.w600",
+                "FontWeight.w700",
+                "FontWeight.w800",
+                "FontWeight.w900"
+            ]
+        },
+        "TextDecoration": {
+            "TextDecoration": {
+                "type": "dropdown",
+                "value": "",
+                "properties": [
+                    "TextDecoration.none",
+                    "TextDecoration.underline",
+                    "TextDecoration.overline",
+                    "TextDecoration.lineThrough"
                 ]
             }
         }
