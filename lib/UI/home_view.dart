@@ -37,7 +37,7 @@ class HomeViewState extends State<HomeView> {
   }
 
   void initData() async {
-    Provider.of<UIProvider>(context, listen: false).widgetProps =
+    Provider.of<UIProvider>(context, listen: false).widgets =
         await Provider.of<UIProvider>(context, listen: false)
             .loadJsonFromAssets('json/widgets.json');
   }
@@ -82,180 +82,184 @@ class HomeViewState extends State<HomeView> {
                         .selectedWidgetData !=
                     null)
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: Provider.of<UIProvider>(context, listen: true)
-                          .selectedWidgetData!["props"]!
-                          .keys
-                          .length,
-                      itemBuilder: (context, index) {
-                        final key =
-                            Provider.of<UIProvider>(context, listen: true)
-                                .selectedWidgetData!["props"]
-                                ?.keys
-                                .elementAt(index);
-                        final List values =
-                            (key == "children" || key == "child")
-                                ? []
-                                : Provider.of<UIProvider>(context, listen: true)
-                                        .selectedWidgetData!["props"]?[key]
-                                    ["properties"];
-                        return !(key == "children" || key == "child")
-                            ? Center(
-                                child: values.isNotEmpty
-                                    ? CustomDropDown(
-                                        dropDownValue: Provider.of<UIProvider>(
-                                                            context,
-                                                            listen: true)
-                                                        .selectedWidgetData![
-                                                    "props"]?[key]["value"] ==
-                                                ""
-                                            ? null
-                                            : Provider.of<UIProvider>(context,
-                                                        listen: true)
-                                                    .selectedWidgetData![
-                                                "props"]?[key]["value"],
-                                        dropDownValues: (values as List)
-                                            .map((e) => e.toString())
-                                            .toList(),
-                                        dropDownName: key,
-                                        height: 60,
-                                        width: 300,
-                                        openHeight: 60 + values.length * 36,
-                                        onChanged: (String value) {
-                                          callBacks.call(
-                                              Provider.of<UIProvider>(context,
-                                                      listen: false)
-                                                  .selectedWidgetKey,
-                                              Provider.of<UIProvider>(context,
-                                                      listen: false)
-                                                  .selectedWidgetData!["props"]
-                                                  ?.keys
-                                                  .elementAt(index),
-                                              value);
-                                        },
-                                      )
-                                    : Center(
-                                        child: SizedBox(
-                                          height: 60,
-                                          width: 300,
-                                          child: Card(
-                                              child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 8.0, left: 8.0),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Transform(
-                                                          transform: Matrix4
-                                                              .translationValues(
-                                                                  0, -4, 0),
-                                                          child: Text(
-                                                            key,style: TextStyle(),
-                                                          )),
-                                                      Transform(
-                                                          transform: Matrix4
-                                                              .translationValues(
-                                                                  4, -15, 0),
-                                                          child: SizedBox(
-                                                            height: 20,
-                                                            child: Consumer<
-                                                                    UIProvider>(
-                                                                builder:
-                                                                    (context,
-                                                                        provider,
-                                                                        child) {
-                                                              TextEditingController
-                                                                  textEditingController =
-                                                                  TextEditingController(
-                                                                      text: provider.selectedWidgetData!["props"]
-                                                                              ?[
-                                                                              key]
-                                                                          [
-                                                                          "value"]);
-                                                              textEditingController
-                                                                      .selection =
-                                                                  TextSelection.fromPosition(TextPosition(
-                                                                      offset: textEditingController
-                                                                          .text
-                                                                          .length));
+                    child: 
+                    customListViewBuilder(Provider.of<UIProvider>(context, listen: true)
+                        .selectedWidgetData!)
+                    // ListView.builder(
+                    //   itemCount: Provider.of<UIProvider>(context, listen: true)
+                    //       .selectedWidgetData!["props"]!
+                    //       .keys
+                    //       .length,
+                    //   itemBuilder: (context, index) {
+                    //     final key =
+                    //         Provider.of<UIProvider>(context, listen: true)
+                    //             .selectedWidgetData!["props"]
+                    //             ?.keys
+                    //             .elementAt(index);
+                    //     final List values =
+                    //         (key == "children" || key == "child")
+                    //             ? []
+                    //             : Provider.of<UIProvider>(context, listen: true)
+                    //                     .selectedWidgetData!["props"]?[key]
+                    //                 ["properties"];
+                    //     return !(key == "children" || key == "child")
+                    //         ? Center(
+                    //             child: values.isNotEmpty
+                    //                 ? CustomDropDown(
+                    //                     dropDownValue: Provider.of<UIProvider>(
+                    //                                         context,
+                    //                                         listen: true)
+                    //                                     .selectedWidgetData![
+                    //                                 "props"]?[key]["value"] ==
+                    //                             ""
+                    //                         ? null
+                    //                         : Provider.of<UIProvider>(context,
+                    //                                     listen: true)
+                    //                                 .selectedWidgetData![
+                    //                             "props"]?[key]["value"],
+                    //                     dropDownValues: (values as List)
+                    //                         .map((e) => e.toString())
+                    //                         .toList(),
+                    //                     dropDownName: key,
+                    //                     height: 60,
+                    //                     width: 300,
+                    //                     openHeight: 60 + values.length * 36,
+                    //                     onChanged: (String value) {
+                    //                       callBacks.call(
+                    //                           Provider.of<UIProvider>(context,
+                    //                                   listen: false)
+                    //                               .selectedWidgetKey,
+                    //                           Provider.of<UIProvider>(context,
+                    //                                   listen: false)
+                    //                               .selectedWidgetData!["props"]
+                    //                               ?.keys
+                    //                               .elementAt(index),
+                    //                           value);
+                    //                     },
+                    //                   )
+                    //                 : Center(
+                    //                     child: SizedBox(
+                    //                       height: 60,
+                    //                       width: 300,
+                    //                       child: Card(
+                    //                           child: Padding(
+                    //                               padding:
+                    //                                   const EdgeInsets.only(
+                    //                                       top: 8.0, left: 8.0),
+                    //                               child: Column(
+                    //                                 crossAxisAlignment:
+                    //                                     CrossAxisAlignment
+                    //                                         .start,
+                    //                                 children: [
+                    //                                   Transform(
+                    //                                       transform: Matrix4
+                    //                                           .translationValues(
+                    //                                               0, -4, 0),
+                    //                                       child: Text(
+                    //                                         key,style: TextStyle(),
+                    //                                       )),
+                    //                                   Transform(
+                    //                                       transform: Matrix4
+                    //                                           .translationValues(
+                    //                                               4, -15, 0),
+                    //                                       child: SizedBox(
+                    //                                         height: 20,
+                    //                                         child: Consumer<
+                    //                                                 UIProvider>(
+                    //                                             builder:
+                    //                                                 (context,
+                    //                                                     provider,
+                    //                                                     child) {
+                    //                                           TextEditingController
+                    //                                               textEditingController =
+                    //                                               TextEditingController(
+                    //                                                   text: provider.selectedWidgetData!["props"]
+                    //                                                           ?[
+                    //                                                           key]
+                    //                                                       [
+                    //                                                       "value"]);
+                    //                                           textEditingController
+                    //                                                   .selection =
+                    //                                               TextSelection.fromPosition(TextPosition(
+                    //                                                   offset: textEditingController
+                    //                                                       .text
+                    //                                                       .length));
 
-                                                              return Row(
-                                                                children: [
-                                                                  Expanded(
-                                                                    child: TextFormField(
-                                                                        controller: textEditingController,
-                                                                        onChanged: (value) {
-                                                                          callBacks.call(
-                                                                              provider.selectedWidgetKey,
-                                                                              provider.selectedWidgetData!["props"]?.keys.elementAt(index),
-                                                                              value);
-                                                                        },
-                                                                        style: TextStyle(
-                                                                          fontSize:
-                                                                              15,
-                                                                        ),
-                                                                        decoration: InputDecoration(
-                                                                          prefixIcon: (provider.selectedWidgetData!["props"]?[key]["type"] == "color")
-                                                                              ? Transform(
-                                                                                  transform: Matrix4.translationValues(0, 10, 0),
-                                                                                  child: Icon(
-                                                                                    Icons.circle_rounded,
-                                                                                    color: colorFromHex(provider.selectedWidgetData?["props"]?[key]["value"]),
-                                                                                  ))
-                                                                              : null,
-                                                                          suffixIcon: (provider.selectedWidgetData!["props"]?[key]["type"] == "color")
-                                                                              ? InkWell(
-                                                                                  child: Icon(Icons.color_lens_rounded),
-                                                                                  onTap: () {
-                                                                                    showDialog(
-                                                                                      context: context,
-                                                                                      builder: (context) {
-                                                                                        return AlertDialog(
-                                                                                          title: const Text('Pick a color!'),
-                                                                                          content: SingleChildScrollView(
-                                                                                            child: ColorPicker(
-                                                                                              pickerColor: Color(0xff443a49),
-                                                                                              onColorChanged: (value) {
-                                                                                                print(value.toHexString());
-                                                                                                textEditingController.text = value.toHexString();
-                                                                                              },
-                                                                                            ),
-                                                                                          ),
-                                                                                          actions: <Widget>[
-                                                                                            ElevatedButton(
-                                                                                              child: const Text('Ok'),
-                                                                                              onPressed: () {
-                                                                                                callBacks.call(provider.selectedWidgetKey, provider.selectedWidgetData!["props"]?.keys.elementAt(index), textEditingController.text);
-                                                                                                Navigator.of(context).pop();
-                                                                                              },
-                                                                                            ),
-                                                                                          ],
-                                                                                        );
-                                                                                      },
-                                                                                    );
-                                                                                  },
-                                                                                )
-                                                                              : null,
-                                                                          contentPadding:
-                                                                              EdgeInsets.symmetric(vertical: 0),
-                                                                          border:
-                                                                              InputBorder.none,
-                                                                        )),
-                                                                  ),
-                                                                ],
-                                                              );
-                                                            }),
-                                                          )),
-                                                    ],
-                                                  ))),
-                                        ),
-                                      ))
-                            : null;
-                      },
-                    ),
+                    //                                           return Row(
+                    //                                             children: [
+                    //                                               Expanded(
+                    //                                                 child: TextFormField(
+                    //                                                     controller: textEditingController,
+                    //                                                     onChanged: (value) {
+                    //                                                       callBacks.call(
+                    //                                                           provider.selectedWidgetKey,
+                    //                                                           provider.selectedWidgetData!["props"]?.keys.elementAt(index),
+                    //                                                           value);
+                    //                                                     },
+                    //                                                     style: TextStyle(
+                    //                                                       fontSize:
+                    //                                                           15,
+                    //                                                     ),
+                    //                                                     decoration: InputDecoration(
+                    //                                                       prefixIcon: (provider.selectedWidgetData!["props"]?[key]["type"] == "color")
+                    //                                                           ? Transform(
+                    //                                                               transform: Matrix4.translationValues(0, 10, 0),
+                    //                                                               child: Icon(
+                    //                                                                 Icons.circle_rounded,
+                    //                                                                 color: colorFromHex(provider.selectedWidgetData?["props"]?[key]["value"]),
+                    //                                                               ))
+                    //                                                           : null,
+                    //                                                       suffixIcon: (provider.selectedWidgetData!["props"]?[key]["type"] == "color")
+                    //                                                           ? InkWell(
+                    //                                                               child: Icon(Icons.color_lens_rounded),
+                    //                                                               onTap: () {
+                    //                                                                 showDialog(
+                    //                                                                   context: context,
+                    //                                                                   builder: (context) {
+                    //                                                                     return AlertDialog(
+                    //                                                                       title: const Text('Pick a color!'),
+                    //                                                                       content: SingleChildScrollView(
+                    //                                                                         child: ColorPicker(
+                    //                                                                           pickerColor: Color(0xff443a49),
+                    //                                                                           onColorChanged: (value) {
+                    //                                                                             print(value.toHexString());
+                    //                                                                             textEditingController.text = value.toHexString();
+                    //                                                                           },
+                    //                                                                         ),
+                    //                                                                       ),
+                    //                                                                       actions: <Widget>[
+                    //                                                                         ElevatedButton(
+                    //                                                                           child: const Text('Ok'),
+                    //                                                                           onPressed: () {
+                    //                                                                             callBacks.call(provider.selectedWidgetKey, provider.selectedWidgetData!["props"]?.keys.elementAt(index), textEditingController.text);
+                    //                                                                             Navigator.of(context).pop();
+                    //                                                                           },
+                    //                                                                         ),
+                    //                                                                       ],
+                    //                                                                     );
+                    //                                                                   },
+                    //                                                                 );
+                    //                                                               },
+                    //                                                             )
+                    //                                                           : null,
+                    //                                                       contentPadding:
+                    //                                                           EdgeInsets.symmetric(vertical: 0),
+                    //                                                       border:
+                    //                                                           InputBorder.none,
+                    //                                                     )),
+                    //                                               ),
+                    //                                             ],
+                    //                                           );
+                    //                                         }),
+                    //                                       )),
+                    //                                 ],
+                    //                               ))),
+                    //                     ),
+                    //                   ))
+                    //         : null;
+                    //   },
+                    // ),
+                  
                   ),
                 TextButton(
                     onPressed: () {
@@ -355,7 +359,7 @@ class HomeViewState extends State<HomeView> {
                                       .selectedWidgetKey = null;
                                   if (Provider.of<UIProvider>(context,
                                           listen: false)
-                                      .widgetProps!
+                                      .widgets!
                                       .keys
                                       .contains(value.toLowerCase())) {
                                     node.data = {
@@ -363,7 +367,7 @@ class HomeViewState extends State<HomeView> {
                                       "props": jsonDecode(jsonEncode(Provider
                                               .of<UIProvider>(context,
                                                   listen: false)
-                                          .widgetProps![value.toLowerCase()])),
+                                          .widgets![value.toLowerCase()])),
                                       "key": node.key
                                     };
                                   } else {
@@ -419,6 +423,213 @@ class HomeViewState extends State<HomeView> {
       ),
     );
   }
+
+  Widget customListViewBuilder(Map data,{String? type,String? widget=""}){
+    if(type=="widget"){
+    data["value"] = Provider.of<UIProvider>(context, listen: false).widgets![widget!.toLowerCase()];
+    print(Provider.of<UIProvider>(context, listen: false).selectedWidgetData);
+    print("itemcount ${data["value"].keys.length}") ;}
+    return   ListView.builder(
+                      itemCount: type!="widget"? Provider.of<UIProvider>(context, listen: true)
+                          .selectedWidgetData!["props"]!
+                          .keys
+                          .length:data["value"].keys.length,
+                      itemBuilder: (context, index) {
+                        final key =
+                            type!="widget"? Provider.of<UIProvider>(context, listen: true)
+                                .selectedWidgetData!["props"]
+                                ?.keys
+                                .elementAt(index):data["value"].keys.elementAt(index);
+                          print("keyyy $key");
+                        if(type=="widget")print("type ${data["value"][key]["type"]}");
+                        String widgetType =type!="widget"? (Provider.of<UIProvider>(context, listen: true)
+                                        .selectedWidgetData!["props"]?[key]["type"]): (data["value"][key]["type"]);
+                        print("widgetType $widgetType");
+                        final List values =
+                            (key == "children" || key == "child")
+                                ? []
+                                :  type!="widget"?(Provider.of<UIProvider>(context, listen: true)
+                                        .selectedWidgetData!["props"][key]["properties"]??[]) : 
+                                         data["value"][key]["properties"]??[];
+                        return !(key == "children" || key == "child")
+                            ? Center(
+                                child: 
+                                switch (widgetType) {
+                                  "dropdown"  =>   CustomDropDown(
+                                        dropDownValue:  type!="widget"?(Provider.of<UIProvider>(
+                                                            context,
+                                                            listen: true)
+                                                        .selectedWidgetData![
+                                                    "props"]?[key]["value"] ==
+                                                ""
+                                            ? null
+                                            : Provider.of<UIProvider>(context,
+                                                        listen: true)
+                                                    .selectedWidgetData![
+                                                "props"]?[key]["value"]): data["value"][key]["value"]==""?null:data["value"][key]["value"],
+                                        dropDownValues: (values as List)
+                                            .map((e) => e.toString())
+                                            .toList(),
+                                        dropDownName: key,
+                                        height: 60,
+                                        width: 300,
+                                        openHeight: 60 + values.length * 36,
+                                        onChanged: (String value) {
+                                           type!="widget"?(callBacks.call(
+                                              Provider.of<UIProvider>(context,
+                                                      listen: false)
+                                                  .selectedWidgetKey,
+                                              Provider.of<UIProvider>(context,
+                                                      listen: false)
+                                                  .selectedWidgetData!["props"]
+                                                  ?.keys
+                                                  .elementAt(index),
+                                              value)): (data["value"][key]["value"]=value);
+                                        print(Provider.of<UIProvider>(context, listen: false).selectedWidgetData);
+                                        }
+                                        ,
+                                      ),
+                                      
+                                   "textfield"||"color"||"number"=>  Center(
+                                        child: SizedBox(
+                                          height: 60,
+                                          width: 300,
+                                          child: Card(
+                                              child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 8.0, left: 8.0),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Transform(
+                                                          transform: Matrix4
+                                                              .translationValues(
+                                                                  0, -4, 0),
+                                                          child: Text(
+                                                            key,
+                                                          )),
+                                                      Transform(
+                                                          transform: Matrix4
+                                                              .translationValues(
+                                                                  4, -15, 0),
+                                                          child: SizedBox(
+                                                            height: 20,
+                                                            child: Consumer<
+                                                                    UIProvider>(
+                                                                builder:
+                                                                    (context,
+                                                                        provider,
+                                                                        child) {
+                                                              TextEditingController
+                                                                  textEditingController =
+                                                                  TextEditingController(
+                                                                      text:  type!="widget"?(provider.selectedWidgetData!["props"]
+                                                                              ?[
+                                                                              key]
+                                                                          [
+                                                                          "value"]): data["value"][key]["value"]);
+                                                              textEditingController
+                                                                      .selection =
+                                                                  TextSelection.fromPosition(TextPosition(
+                                                                      offset: textEditingController
+                                                                          .text
+                                                                          .length));
+
+                                                              return Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: TextFormField(
+                                                                      validator: (value) => (widgetType!="number")? "only numbers are accepted":null,
+                                                                        controller: textEditingController,
+                                                                        onChanged: (value) {
+                                                                        widgetType  !="widget"? callBacks.call(
+                                                                              provider.selectedWidgetKey,
+                                                                              provider.selectedWidgetData!["props"]?.keys.elementAt(index),
+                                                                              value): ( data["value"][key]["value"]=value);
+                                                                        },
+                                                                        style: TextStyle(
+                                                                          fontSize:
+                                                                              15,
+                                                                        ),
+                                                                        decoration: InputDecoration(
+                                                                          prefixIcon: (widgetType == "color")
+                                                                              ? Transform(
+                                                                                  transform: Matrix4.translationValues(0, 10, 0),
+                                                                                  child: Icon(
+                                                                                    Icons.circle_rounded,
+                                                                                    color: colorFromHex( widgetType!="widget"?provider.selectedWidgetData?["props"]?[key]["value"]: data["value"][key]["value"]),
+                                                                                  ))
+                                                                              : null,
+                                                                          suffixIcon: (widgetType == "color")
+                                                                              ? InkWell(
+                                                                                  child: Icon(Icons.color_lens_rounded),
+                                                                                  onTap: () {
+                                                                                    showDialog(
+                                                                                      context: context,
+                                                                                      builder: (context) {
+                                                                                        return AlertDialog(
+                                                                                          title: const Text('Pick a color!'),
+                                                                                          content: SingleChildScrollView(
+                                                                                            child: ColorPicker(
+                                                                                              pickerColor: Color(0xff443a49),
+                                                                                              onColorChanged: (value) {
+                                                                                                print(value.toHexString());
+                                                                                                textEditingController.text = value.toHexString();
+                                                                                              },
+                                                                                            ),
+                                                                                          ),
+                                                                                          actions: <Widget>[
+                                                                                            ElevatedButton(
+                                                                                              child: const Text('Ok'),
+                                                                                              onPressed: () {
+                                                                                                callBacks.call(provider.selectedWidgetKey, provider.selectedWidgetData!["props"]?.keys.elementAt(index), textEditingController.text);
+                                                                                                
+                                                                                                
+                                                                                                Navigator.of(context).pop();
+                                                                                              },
+                                                                                            ),
+                                                                                          ],
+                                                                                        );
+                                                                                      },
+                                                                                    );
+                                                                                  },
+                                                                                )
+                                                                              : null,
+                                                                          contentPadding:
+                                                                              EdgeInsets.symmetric(vertical: 0),
+                                                                          border:
+                                                                              InputBorder.none,
+                                                                        )),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            }),
+                                                          )),
+                                                    ],
+                                                  ))),
+                                        ),
+                                      ),
+
+                                    "widget"=>SizedBox(
+                                      height: 1000,
+
+                                      child: customListViewBuilder( Provider.of<UIProvider>(context, listen: true)
+                                          .selectedWidgetData!["props"]?[key],type: "widget",widget:Provider.of<UIProvider>(context, listen: true)
+                                          .selectedWidgetData!["props"]?[key]["widget"] ),
+                                    ),
+                                  // TODO: Handle this case.
+                                  Object() => SizedBox(),
+                                 
+                                } )
+                            : SizedBox();
+                      },
+                    );
+                  
+  }
+
 }
 
 final sampleTree = TreeNode.root()..add(TreeNode());

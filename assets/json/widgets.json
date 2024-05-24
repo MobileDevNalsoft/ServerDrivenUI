@@ -76,14 +76,17 @@
             },
             "elevation": {
                 "value": "",
+                "type":"number",
                 "properties": []
             },
             "shape": {
                 "value": "",
+                "type":"textfield",
                 "properties": []
             },
             "borderOnForeground": {
                 "value": "true",
+                "type":"dropdown",
                 "properties": [
                     "true",
                     "false"
@@ -91,34 +94,53 @@
             },
             "margin": {
                 "value": "",
+                "type":"number",
                 "properties": []
             },
             "clipBehavior": {
                 "value": "",
+                "type":"textfield",
                 "properties": []
             },
             "child": {},
             "semanticContainer": {
                 "value": "true",
+                "type":"dropdown",
                 "properties": [
                     "true",
                     "false"
                 ]
             }
         },
-        "Text": {
+        "text": {
             "data": {
                 "value": "",
                 "properties": [],
-                "type": ""
+                "type": "textfield"
+            },
+            "overflow": {
+                "value": "",
+                "properties": [
+                    "TextOverflow.clip",
+                    "TextOverflow.fade",
+                    "TextOverflow.ellipsis",
+                    "TextOverflow.visible"
+                ],
+                "type": "dropdown"
+            },
+            "textScaleFactor": {
+                "type": "number",
+                "value": ""
             },
             "style": {
                 "type": "widget",
-                "widget": "TextStyle"
+                "widget": "TextStyle",
+                "value":""
             },
             "StrutStyle": {
                 "type": "widget",
-                "widget": "StrutStyle"
+                "widget": "StrutStyle",
+                "value":""
             },
             "textAlign": {
                 "value": "",
@@ -142,7 +164,8 @@
             },
             "locale": {
                 "type": "widget",
-                "widget": "StrutStyle"
+                "widget": "StrutStyle",
+                "value":""
             },
             "softWrap": {
                 "value": "",
@@ -152,21 +175,8 @@
                 ],
                 "type": "dropdown"
             },
-            "overflow": {
-                "value": "",
-                "properties": [
-                    "TextOverflow.clip",
-                    "TextOverflow.fade",
-                    "TextOverflow.ellipsis",
-                    "TextOverflow.visible"
-                ],
-                "type": "dropdown"
-            },
-            "textScaleFactor": {
-                "type": "number",
-                "value": ""
-            },
-            "textScaler": {},
+            
+           
             "maxLines": {
                 "type": "number",
                 "value": ""
@@ -182,17 +192,17 @@
                     "TextWidthBasis.longestLine"
                 ],
                 "type": "dropdown"
-            },
-            "textHeightBehavior": {},
-            "selectionColor": {}
+            }
+           
         },
-        "TextStyle": {
+        "textstyle": {
             "inherit": {
                 "value": "true",
                 "properties": [
                     "true",
                     "false"
-                ]
+                ],
+                "type":"dropdown"
             },
             "color": {
                 "value": "FFA22DDC",
@@ -250,7 +260,7 @@
             },
             "locale":  {
                 "type": "widget",
-                "widget": "TextDecoration"
+                "widget": "Locale"
             },
             "shadows": {
                 "type": "widget",
@@ -258,6 +268,7 @@
             },
             "decoration": {
                 "type": "widget",
+                "value":"",
                 "widget": "TextDecoration"
             },
             "decorationColor":  {
@@ -403,8 +414,8 @@
                 "FontWeight.w900"
             ]
         },
-        "TextDecoration": {
-            "TextDecoration": {
+        "TextDecoration": {"textDecoration":{
+            
                 "type": "dropdown",
                 "value": "",
                 "properties": [
@@ -413,7 +424,7 @@
                     "TextDecoration.overline",
                     "TextDecoration.lineThrough"
                 ]
-            }
-        }
+            
+        }}
     }
 }

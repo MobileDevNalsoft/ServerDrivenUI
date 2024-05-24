@@ -13,8 +13,8 @@ class UIProvider extends ChangeNotifier {
   Map? get selectedWidgetData => _selectedWidgetData;
 
   String? get selectedWidgetKey => _selectedWidgetKey;
-  Map? get widgetProps => _widgetProps;
-  set widgetProps(value){
+  Map? get widgets => _widgetProps;
+  set widgets(value){
     _widgetProps =value;
     // notifyListeners();
   }
