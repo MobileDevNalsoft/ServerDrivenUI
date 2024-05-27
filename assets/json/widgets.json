@@ -76,17 +76,17 @@
             },
             "elevation": {
                 "value": "",
-                "type":"number",
+                "type": "number",
                 "properties": []
             },
             "shape": {
                 "value": "",
-                "type":"textfield",
+                "type": "textfield",
                 "properties": []
             },
             "borderOnForeground": {
                 "value": "true",
-                "type":"dropdown",
+                "type": "dropdown",
                 "properties": [
                     "true",
                     "false"
@@ -94,18 +94,18 @@
             },
             "margin": {
                 "value": "",
-                "type":"number",
+                "type": "number",
                 "properties": []
             },
             "clipBehavior": {
                 "value": "",
-                "type":"textfield",
+                "type": "textfield",
                 "properties": []
             },
             "child": {},
             "semanticContainer": {
                 "value": "true",
-                "type":"dropdown",
+                "type": "dropdown",
                 "properties": [
                     "true",
                     "false"
@@ -135,12 +135,12 @@
             "style": {
                 "type": "widget",
                 "widget": "TextStyle",
-                "value":""
+                "value": ""
             },
             "StrutStyle": {
                 "type": "widget",
                 "widget": "StrutStyle",
-                "value":""
+                "value": ""
             },
             "textAlign": {
                 "value": "",
@@ -164,8 +164,8 @@
             },
             "locale": {
                 "type": "widget",
-                "widget": "StrutStyle",
-                "value":""
+                "widget": "locale",
+                "value": ""
             },
             "softWrap": {
                 "value": "",
@@ -175,8 +175,6 @@
                 ],
                 "type": "dropdown"
             },
-            
-           
             "maxLines": {
                 "type": "number",
                 "value": ""
@@ -193,7 +191,6 @@
                 ],
                 "type": "dropdown"
             }
-           
         },
         "textstyle": {
             "inherit": {
@@ -202,7 +199,7 @@
                     "true",
                     "false"
                 ],
-                "type":"dropdown"
+                "type": "dropdown"
             },
             "color": {
                 "value": "FFA22DDC",
@@ -219,8 +216,21 @@
                 "value": ""
             },
             "fontWeight": {
-                "type": "widget",
-                "widget": "FontWeight"
+                "type": "dropdown",
+                "value": "",
+                "properties": [
+                    "FontWeight.normal",
+                    "FontWeight.bold",
+                    "FontWeight.w100",
+                    "FontWeight.w200",
+                    "FontWeight.w300",
+                    "FontWeight.w400",
+                    "FontWeight.w500",
+                    "FontWeight.w600",
+                    "FontWeight.w700",
+                    "FontWeight.w800",
+                    "FontWeight.w900"
+                ]
             },
             "fontStyle": {
                 "type": "dropdown",
@@ -240,7 +250,7 @@
             },
             "textBaseline": {
                 "type": "dropdown",
-                "value": "FontStyle.normal",
+                "value": "",
                 "properties": [
                     "TextBaseline.alphabetic",
                     "TextBaseline.ideographic"
@@ -258,7 +268,7 @@
                     "TextLeadingDistribution.even"
                 ]
             },
-            "locale":  {
+            "locale": {
                 "type": "widget",
                 "widget": "Locale"
             },
@@ -267,11 +277,16 @@
                 "widget": "Shadow"
             },
             "decoration": {
-                "type": "widget",
-                "value":"",
-                "widget": "TextDecoration"
+                "type": "dropdown",
+                "value": "",
+                "properties": [
+                    "TextDecoration.none",
+                    "TextDecoration.underline",
+                    "TextDecoration.overline",
+                    "TextDecoration.lineThrough"
+                ]
             },
-            "decorationColor":  {
+            "decorationColor": {
                 "value": "FFA22DDC",
                 "type": "color",
                 "properties": []
@@ -280,8 +295,7 @@
                 "type": "dropdown",
                 "value": "",
                 "properties": [
-                    "solid",
-                    "double",
+                    "solid",    
                     "double",
                     "dashed",
                     "wavy"
@@ -308,13 +322,13 @@
                 "value": ""
             }
         },
-        "Shadow":{
-            "color":{
+        "shadow": {
+            "color": {
                 "value": "FFA22DDC",
                 "type": "color",
                 "properties": []
             },
-            "offset":{
+            "offset": {
                 "type": "widget",
                 "widget": "Offset"
             },
@@ -323,32 +337,32 @@
                 "value": ""
             }
         },
-        "Offset":{
-            "dx":{
+        "offset": {
+            "dx": {
                 "type": "number",
                 "value": ""
             },
-            "dy":{
+            "dy": {
                 "type": "number",
                 "value": ""
             }
         },
-        "Locale": {
-            "Locale": {
+        "locale": {
+            "locale": {
                 "type": "textfield",
                 "value": ""
             }
         },
-        "StrutStyle": {
-            "fontFamily": {
+        "strutstyle": {
+            "fontfamily": {
                 "type": "textfield",
                 "value": ""
             },
-            "fontFamilyFallback": {
-                "type": "widget",
-                "widget": "TextStyle"
+            "fontfamilyfallback": {
+                "type": "textfield",
+                "value": ""
             },
-            "fontSize": {
+            "fontsize": {
                 "type": "number",
                 "value": ""
             },
@@ -369,8 +383,21 @@
                 "type": "number"
             },
             "fontWeight": {
-                "type": "widget",
-                "widget": "FontWeight"
+                "type": "dropdown",
+                "value": "",
+                "properties": [
+                    "FontWeight.normal",
+                    "FontWeight.bold",
+                    "FontWeight.w100",
+                    "FontWeight.w200",
+                    "FontWeight.w300",
+                    "FontWeight.w400",
+                    "FontWeight.w500",
+                    "FontWeight.w600",
+                    "FontWeight.w700",
+                    "FontWeight.w800",
+                    "FontWeight.w900"
+                ]
             },
             "fontStyle": {
                 "type": "dropdown",
@@ -396,35 +423,6 @@
                 "type": "textfield",
                 "value": ""
             }
-        },
-        "FontWeight": {
-            "type": "dropdown",
-            "value": "",
-            "properties": [
-                "FontWeight.normal",
-                "FontWeight.bold",
-                "FontWeight.w100",
-                "FontWeight.w200",
-                "FontWeight.w300",
-                "FontWeight.w400",
-                "FontWeight.w500",
-                "FontWeight.w600",
-                "FontWeight.w700",
-                "FontWeight.w800",
-                "FontWeight.w900"
-            ]
-        },
-        "TextDecoration": {"textDecoration":{
-            
-                "type": "dropdown",
-                "value": "",
-                "properties": [
-                    "TextDecoration.none",
-                    "TextDecoration.underline",
-                    "TextDecoration.overline",
-                    "TextDecoration.lineThrough"
-                ]
-            
-        }}
+        }
     }
 }
