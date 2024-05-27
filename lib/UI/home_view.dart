@@ -275,7 +275,7 @@ class HomeViewState extends State<HomeView> {
                           (value as Map).forEach((propKey,propValue){
                             if(propValue["value"]!=""){
                               if(propValue["type"]!="widget"){
-                                (internalJson[key] as Map).addAll({propKey:propValue["value"]});
+                                internalJson.addAll({propKey:propValue["value"]});
                               }
                               else{
                                 var nestedJson = generateInternalJson(propValue["value"]);
