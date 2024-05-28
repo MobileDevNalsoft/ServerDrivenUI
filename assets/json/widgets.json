@@ -270,11 +270,13 @@
             },
             "locale": {
                 "type": "widget",
-                "widget": "Locale"
+                "widget": "Locale",
+                "value":""
             },
             "shadows": {
                 "type": "widget",
-                "widget": "Shadow"
+                "widget": "Shadow",
+                "value":""
             },
             "decoration": {
                 "type": "dropdown",
@@ -330,7 +332,8 @@
             },
             "offset": {
                 "type": "widget",
-                "widget": "Offset"
+                "widget": "Offset",
+                "value":""
             },
             "blurRadius": {
                 "type": "number",
